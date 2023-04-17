@@ -27,11 +27,11 @@ type Server struct {
 }
 
 type User struct {
-	UserID string `src:"userID" dest:"userID" unique:"true"`
+	UserID string `src:"id" dest:"user_id" unique:"true"`
 	Token  string `src:"token" dest:"token"`
 	Banned bool   `src:"banned" dest:"banned" default:"false"`
 	Staff  bool   `src:"staff" dest:"staff" default:"false"`
-	Bio    string `src:"bio" dest:"bio" default:"I'm an ordinary widgeter"`
+	Bio    string `src:"bio" dest:"bio" default:"'No bio set!'"`
 }
 
 var userTransforms = map[string]cli.TransformFunc{
@@ -43,14 +43,14 @@ var userTransforms = map[string]cli.TransformFunc{
 type Template struct {
 	Title       string `src:"title" dest:"title"`
 	Image       string `src:"image" dest:"image"`
-	Description string `src:"description" dest:"description" default:"A simple widget template"`
+	Description string `src:"description" dest:"description" default:"'A simple widget template'"`
 }
 
 type Widget struct {
 	ServerID string `src:"serverId" dest:"server_id" fk:"servers,server_id"`
 	UserID   string `src:"userId" dest:"user_id" fk:"users,user_id"`
-	Theme    string `src:"theme" dest:"theme" default:"dark"`
-	Image    string `src:"image" dest:"image" default:"/landing.svg"`
+	Theme    string `src:"theme" dest:"theme" default:"'dark'"`
+	Image    string `src:"image" dest:"image" default:"'/landing.svg'"`
 	Domain   string `src:"domain" dest:"domain"`
 	Token    string `src:"token" dest:"token"`
 }
@@ -66,7 +66,7 @@ func main() {
 
 	cli.Main(cli.App{
 		SchemaOpts: cli.SchemaOpts{
-			TableName: "dscjobs",
+			TableName: "diswidgets",
 		},
 		// Required
 		LoadSource: func(name string) (cli.Source, error) {
